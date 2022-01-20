@@ -7,7 +7,7 @@ android {
     compileSdk 30
 
     defaultConfig {
-        applicationId "com.bignerdranch.android.foodtinder"
+        applicationId "com.foodtinder"
         minSdk 26
         targetSdk 30
         versionCode 1

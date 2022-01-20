@@ -1,4 +1,4 @@
-package com.bignerdranch.android.foodtinder
+package com.foodtinder
 
 import org.junit.Test
 

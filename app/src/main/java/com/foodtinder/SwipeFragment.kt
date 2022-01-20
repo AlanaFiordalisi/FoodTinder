@@ -1,4 +1,4 @@
-package com.bignerdranch.android.foodtinder
+package com.foodtinder
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

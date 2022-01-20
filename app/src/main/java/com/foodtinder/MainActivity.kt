@@ -1,4 +1,4 @@
-package com.bignerdranch.android.foodtinder
+package com.foodtinder
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
