@@ -1,8 +1,8 @@
 package com.foodtinder.network
 
+import com.foodtinder.network.model.RestaurantSearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Header
-import retrofit2.http.Query
 import retrofit2.http.QueryMap
 
 interface ApiService {
@@ -10,8 +10,8 @@ interface ApiService {
     @GET("businesses/search?term=restaurants&limit=32&sortBy=rating")
     suspend fun search(
         @Header("Authorization") token: String,
-        @QueryMap paramsMap: Map<String, String>,
-
+        @QueryMap paramsMap: Map<String, String>
+    ): RestaurantSearchResponse
 
 //        @Query("term") term: String = "restaurants",
 //        @Query("limit") limit: Int = 32,
@@ -25,5 +25,4 @@ interface ApiService {
         // long
         // before calling search, ensure location != null || (lat != null && long != null)
         // structure ?!?
-        )
 }
