@@ -27,8 +27,17 @@ class MainActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        binding.button.setOnClickListener {
-            buttonOnClick()
+//        binding.button.setOnClickListener {
+//            buttonOnClick()
+//        }
+
+        val currentFragment = supportFragmentManager.findFragmentById(R.id.frag)
+        if (currentFragment == null) {
+            val fragment = FilterFragment()
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.frag, fragment)
+                .commit()
         }
     }
 
