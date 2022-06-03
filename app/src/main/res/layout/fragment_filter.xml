@@ -3,36 +3,63 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical">
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" >
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:title="@string/session_name"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back"
-            tools:title="Filter Your Results"
-            style="@style/Widget.MaterialComponents.Toolbar.Primary" />
-
-    </com.google.android.material.appbar.AppBarLayout>
+    android:orientation="vertical"
+    android:padding="16dp">
 
     <TextView
+        android:id="@+id/filter_price_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Price Range" />
+        android:text="Price Range"
+        android:textSize="16sp" />
 
     <RatingBar
+        android:id="@+id/filter_price_rating_bar"
+        style="@style/dollarRatingBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="4"
-        style="?attr/ratingBarStyleSmall"/>
+        android:stepSize="1"
+        android:numStars="4"/>
+
+    <TextView
+        android:id="@+id/filter_distance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Distance (miles)"
+        android:textSize="16sp" />
+
+    <com.google.android.material.slider.Slider
+        android:id="@+id/filter_distance_slider"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:trackHeight="4dp"
+        app:thumbRadius="8dp"
+        android:valueFrom="0"
+        android:valueTo="24"
+        android:stepSize="1" />
+
+    <TextView
+        android:id="@+id/filter_category_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Categories"
+        android:textSize="16sp" />
+
+    <AutoCompleteTextView
+        android:id="@+id/filter_category_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:completionThreshold="2"
+        android:hint="Enter restaurant categories and cuisines..." />
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/filter_category_chips"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Search!" />
 
 </LinearLayout>
