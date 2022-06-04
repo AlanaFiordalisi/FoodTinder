@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="SmallHeading" parent="Widget.AppCompat.TextView">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginTop">8dp</item>
+    </style>
+
     <style name="CustomRatingBarStyle" parent="Widget.AppCompat.RatingBar">
         <item name="android:progressDrawable">@drawable/custom_rating_bar</item>
         <item name="android:minHeight">15dip</item>

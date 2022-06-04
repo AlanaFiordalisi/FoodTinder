@@ -1,64 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:padding="16dp">
 
     <TextView
         android:id="@+id/filter_price_label"
+        style="@style/SmallHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Price Range"
-        android:textSize="16sp" />
+        android:text="@string/filter_price_range_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <RatingBar
         android:id="@+id/filter_price_rating_bar"
+        style="@style/CustomRatingBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:numStars="4"
         android:stepSize="1"
-        style="@style/CustomRatingBarStyle"/>
+        app:layout_constraintStart_toStartOf="@+id/filter_price_label"
+        app:layout_constraintTop_toBottomOf="@+id/filter_price_label" />
 
     <TextView
         android:id="@+id/filter_distance_label"
+        style="@style/SmallHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Distance (miles)"
-        android:textSize="16sp" />
+        android:text="@string/filter_distance_title"
+        app:layout_constraintBottom_toTopOf="@+id/filter_distance_slider"
+        app:layout_constraintStart_toStartOf="@+id/filter_distance_slider" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/filter_distance_slider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:trackHeight="4dp"
-        app:thumbRadius="8dp"
+        android:layout_marginTop="32dp"
+        android:stepSize="1"
         android:valueFrom="0"
         android:valueTo="24"
-        android:stepSize="1" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_price_rating_bar"
+        app:thumbRadius="8dp"
+        app:trackHeight="4dp" />
 
     <TextView
         android:id="@+id/filter_category_label"
+        style="@style/SmallHeading"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Categories"
-        android:textSize="16sp" />
+        android:layout_marginTop="8dp"
+        android:text="@string/filter_categories_title"
+        app:layout_constraintStart_toStartOf="@+id/filter_distance_slider"
+        app:layout_constraintTop_toBottomOf="@+id/filter_distance_slider" />
 
     <AutoCompleteTextView
         android:id="@+id/filter_category_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:completionThreshold="2"
-        android:hint="Enter restaurant categories and cuisines..." />
+        android:hint="@string/filter_categories_hint"
+        app:layout_constraintStart_toStartOf="@+id/filter_category_label"
+        app:layout_constraintTop_toBottomOf="@+id/filter_category_label" />
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/filter_category_chips"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/filter_category_input"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/filter_category_input"
+        app:layout_constraintTop_toBottomOf="@+id/filter_category_input" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:id="@+id/button"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Search!" />
-</LinearLayout>
+        android:text="@string/search"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
