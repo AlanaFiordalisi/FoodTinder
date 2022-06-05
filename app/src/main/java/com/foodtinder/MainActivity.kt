@@ -1,8 +1,8 @@
 package com.foodtinder
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.foodtinder.databinding.ActivityMainBinding
 import com.foodtinder.network.ApiService
 import com.foodtinder.network.model.RestaurantSearchResponse

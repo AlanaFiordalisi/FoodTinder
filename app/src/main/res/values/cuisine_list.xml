@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="cuisine_list">
+        <item>Afghan</item>
+        <item>African</item>
+        <item>American</item>
+        <item>American</item>
+        <item>Andalusian</item>
+        <item>Arabic</item>
+        <item>Argentine</item>
+        <item>Armenian</item>
+        <item>Asian Fusion</item>
+        <item>Asturian</item>
+        <item>Australian</item>
+        <item>Austrian</item>
+        <item>Baguettes</item>
+        <item>Bangladeshi</item>
+        <item>Barbeque</item>
+        <item>Basque</item>
+        <item>Bavarian</item>
+        <item>Beer Garden</item>
+        <item>Beer Hall</item>
+        <item>Beisl</item>
+        <item>Belgian</item>
+        <item>Bistros</item>
+        <item>Black Sea</item>
+        <item>Brasseries</item>
+        <item>Brazilian</item>
+        <item>Breakfast &amp; Brunch</item>
+        <item>British</item>
+        <item>Buffets</item>
+        <item>Bulgarian</item>
+        <item>Burgers</item>
+        <item>Burmese</item>
+        <item>Cafes</item>
+        <item>Cafeteria</item>
+        <item>Cajun/Creole</item>
+        <item>Cambodian</item>
+        <item>Canadian</item>
+        <item>Canteen</item>
+        <item>Caribbean</item>
+        <item>Catalan</item>
+        <item>Cheesesteaks</item>
+        <item>Chicken Shop</item>
+        <item>Chicken Wings</item>
+        <item>Chilean</item>
+        <item>Chinese</item>
+        <item>Comfort Food</item>
+        <item>Corsican</item>
+        <item>Creperies</item>
+        <item>Cuban</item>
+        <item>Curry Sausage</item>
+        <item>Cypriot</item>
+        <item>Czech</item>
+        <item>Czech/Slovakian</item>
+        <item>Danish</item>
+        <item>Delis</item>
+        <item>Diners</item>
+        <item>Dinner Theater</item>
+        <item>Dumplings</item>
+        <item>Eastern European</item>
+        <item>Eritrean</item>
+        <item>Ethiopian</item>
+        <item>Fast Food</item>
+        <item>Filipino</item>
+        <item>Fischbroetchen</item>
+        <item>Fish &amp; Chips</item>
+        <item>Flatbread</item>
+        <item>Fondue</item>
+        <item>Food Court</item>
+        <item>Food Stands</item>
+        <item>Freiduria</item>
+        <item>French</item>
+        <item>French Southwest</item>
+        <item>Galician</item>
+        <item>Game Meat</item>
+        <item>Gastropubs</item>
+        <item>Georgian</item>
+        <item>German</item>
+        <item>Giblets</item>
+        <item>Gluten-Free</item>
+        <item>Greek</item>
+        <item>Guamanian</item>
+        <item>Halal</item>
+        <item>Hawaiian</item>
+        <item>Heuriger</item>
+        <item>Himalayan/Nepalese</item>
+        <item>Honduran</item>
+        <item>Hong Kong Style Cafe</item>
+        <item>Hot Dogs</item>
+        <item>Hot Pot</item>
+        <item>Hungarian</item>
+        <item>Iberian</item>
+        <item>Indian</item>
+        <item>Indonesian</item>
+        <item>International</item>
+        <item>Irish</item>
+        <item>Island Pub</item>
+        <item>Israeli</item>
+        <item>Italian</item>
+        <item>Japanese</item>
+        <item>Jewish</item>
+        <item>Kebab</item>
+        <item>Kopitiam</item>
+        <item>Korean</item>
+        <item>Kosher</item>
+        <item>Kurdish</item>
+        <item>Laos</item>
+        <item>Laotian</item>
+        <item>Latin American</item>
+        <item>Live/Raw Food</item>
+        <item>Lyonnais</item>
+        <item>Malaysian</item>
+        <item>Meatballs</item>
+        <item>Mediterranean</item>
+        <item>Mexican</item>
+        <item>Middle Eastern</item>
+        <item>Lebanese</item>
+        <item>Milk Bars</item>
+        <item>Modern Australian</item>
+        <item>Modern European</item>
+        <item>Mongolian</item>
+        <item>Moroccan</item>
+        <item>New Mexican Cuisine</item>
+        <item>New Zealand</item>
+        <item>Nicaraguan</item>
+        <item>Night Food</item>
+        <item>Nikkei</item>
+        <item>Noodles</item>
+        <item>Norcinerie</item>
+        <item>Open Sandwiches</item>
+        <item>Oriental</item>
+        <item>PF/Comercial</item>
+        <item>Pakistani</item>
+        <item>Pan Asian</item>
+        <item>Parent Cafes</item>
+        <item>Parma</item>
+        <item>Persian/Iranian</item>
+        <item>Peruvian</item>
+        <item>Pita</item>
+        <item>Pizza</item>
+        <item>Polish</item>
+        <item>Polynesian</item>
+        <item>Pop-Up Restaurants</item>
+        <item>Portuguese</item>
+        <item>Potatoes</item>
+        <item>Poutineries</item>
+        <item>Pub Food</item>
+        <item>Rice</item>
+        <item>Romanian</item>
+        <item>Rotisserie Chicken</item>
+        <item>Russian</item>
+        <item>Salad</item>
+        <item>Sandwiches</item>
+        <item>Scandinavian</item>
+        <item>Schnitzel</item>
+        <item>Scottish</item>
+        <item>Seafood</item>
+        <item>Serbo Croatian</item>
+        <item>Signature Cuisine</item>
+        <item>Singaporean</item>
+        <item>Slovakian</item>
+        <item>Somali</item>
+        <item>Soul Food</item>
+        <item>Soup</item>
+        <item>Southern</item>
+        <item>Spanish</item>
+        <item>Sri Lankan</item>
+        <item>Steakhouses</item>
+        <item>Supper Clubs</item>
+        <item>Sushi Bars</item>
+        <item>Swabian</item>
+        <item>Swedish</item>
+        <item>Swiss Food</item>
+        <item>Syrian</item>
+        <item>Tabernas</item>
+        <item>Taiwanese</item>
+        <item>Tapas Bars</item>
+        <item>Tapas/Small Plates</item>
+        <item>Tavola Calda</item>
+        <item>Tex-Mex</item>
+        <item>Thai</item>
+        <item>Traditional Norwegian</item>
+        <item>Traditional Swedish</item>
+        <item>Trattorie</item>
+        <item>Turkish</item>
+        <item>Ukrainian</item>
+        <item>Uzbek</item>
+        <item>Vegan</item>
+        <item>Vegetarian</item>
+        <item>Venison</item>
+        <item>Vietnamese</item>
+        <item>Waffles</item>
+        <item>Wok</item>
+        <item>Wraps</item>
+        <item>Yugoslav</item>
+
+    </string-array>
+</resources>
