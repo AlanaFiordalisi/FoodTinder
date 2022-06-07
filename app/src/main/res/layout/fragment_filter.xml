@@ -57,7 +57,7 @@
         app:layout_constraintStart_toStartOf="@+id/filter_distance_slider"
         app:layout_constraintTop_toBottomOf="@+id/filter_distance_slider" />
 
-    <MultiAutoCompleteTextView
+    <AutoCompleteTextView
         android:id="@+id/filter_category_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<chip style="@style/Widget.MaterialComponents.Chip.Action" />
+<chip xmlns:app="http://schemas.android.com/apk/res-auto"
+    style="@style/Widget.MaterialComponents.Chip.Entry"
+    app:chipBackgroundColor="@color/blue_200" />
 

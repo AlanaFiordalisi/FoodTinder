@@ -1,7 +1,5 @@
 package com.foodtinder.features.filter
 
-import android.content.Context
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.Spanned
@@ -11,12 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
-import android.widget.MultiAutoCompleteTextView
-import androidx.core.content.ContextCompat
+import android.widget.AutoCompleteTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.foodtinder.R
 import com.foodtinder.databinding.FragmentFilterBinding
+import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipDrawable
 
 
@@ -53,45 +51,38 @@ class FilterFragment : Fragment() {
         }
 
         // Set up AutoCompleteTextView
-        val cuisines: Array<String> = activity?.resources?.getStringArray(R.array.cuisine_list) as Array<String>
-
+        val cuisineList: Array<String> = activity?.resources?.getStringArray(R.array.cuisine_list) as Array<String>
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             view.context,
             android.R.layout.simple_dropdown_item_1line,
-            cuisines
+            cuisineList
         )
-        val textView: MultiAutoCompleteTextView = binding.filterCategoryInput
-        textView.setTokenizer(MultiAutoCompleteTextView.CommaTokenizer())
+
+        val textView: AutoCompleteTextView = binding.filterCategoryInput
         textView.setAdapter(adapter)
         textView.onItemClickListener = OnItemClickListener { adapterView, _, i, _ ->
+            // Add chip to group below input field
             val selectedCuisine: String = adapterView.getItemAtPosition(i) as String
-            createRecipientChip(selectedCuisine)
+            addChipToChipGroup(selectedCuisine)
+
+            // Remove text from input field
+            textView.setText("")
         }
 
         return view
     }
 
-    private fun createRecipientChip(selectedCuisine: String) {
-        val chip = ChipDrawable.createFromResource(requireActivity(), R.xml.chip)
-        val span = ImageSpan(chip)
-        val cursorPosition: Int = binding.filterCategoryInput.selectionStart
-        val spanLength: Int = selectedCuisine.length + 2
-        val text: Editable = binding.filterCategoryInput.text
-//        chip.chipIcon = ContextCompat.getDrawable(
-//            this@MainActivity,
-//            selectedCuisine.getAvatarResource()
-//        )
-        chip.text = selectedCuisine
-        chip.setBounds(0, 0, chip.intrinsicWidth, chip.intrinsicHeight)
-        chip.chipBackgroundColor = ColorStateList.valueOf(
-            ContextCompat.getColor(requireActivity(), R.color.light_green_200)
-        )
+    private fun addChipToChipGroup(cuisine: String) {
+        val chipGroup = binding.filterCategoryChips
+        val chip = layoutInflater.inflate(
+            R.layout.single_chip,
+            chipGroup,
+            false) as Chip
 
-        text.setSpan(
-            span,
-            cursorPosition - spanLength,
-            cursorPosition,
-            Spanned.SPAN_INCLUSIVE_EXCLUSIVE
-        )
+        chip.text = cuisine
+        chipGroup.addView(chip)
+        chip.setOnCloseIconClickListener {
+            chipGroup.removeView(it)
+        }
     }
 }
