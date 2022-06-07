@@ -1,8 +1,9 @@
-package com.foodtinder
+package com.foodtinder.features
 
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.foodtinder.R
 import com.foodtinder.databinding.ActivityMainBinding
 import com.foodtinder.network.ApiService
 import com.foodtinder.network.model.RestaurantSearchResponse
@@ -31,14 +32,14 @@ class MainActivity : AppCompatActivity() {
 //            buttonOnClick()
 //        }
 
-        val currentFragment = supportFragmentManager.findFragmentById(R.id.frag)
-        if (currentFragment == null) {
-            val fragment = FilterFragment()
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.frag, fragment)
-                .commit()
-        }
+//        val currentFragment = supportFragmentManager.findFragmentById(R.id.frag)
+//        if (currentFragment == null) {
+//            val fragment = FilterFragment()
+//            supportFragmentManager
+//                .beginTransaction()
+//                .add(R.id.frag, fragment)
+//                .commit()
+//        }
     }
 
     private fun buttonOnClick() {
