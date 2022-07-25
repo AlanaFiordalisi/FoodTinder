@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "alias": "italian",
+      "title": "Italian"
+    },
+    {
+      "alias": "mexican",
+      "title": "Mexican"
+    },
+    {
+      "alias": "sandwiches",
+      "title": "Sandwiches"
+    },
+    {
+      "alias": "afghani",
+      "title": "Afghan"
+    },
+    {
+      "alias": "breakfast_brunch",
+      "title": "Breakfast & Brunch"
+    }
+  ]
+}
