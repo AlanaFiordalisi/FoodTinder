@@ -2,41 +2,66 @@ package com.foodtinder.network
 
 import android.content.Context
 import android.util.Log
-
 import com.foodtinder.model.CuisineList
-import com.google.android.material.internal.ContextUtils.getActivity
-import com.google.gson.Gson
+import com.foodtinder.network.model.RestaurantSearchResponse
+import com.google.gson.GsonBuilder
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import java.io.File
-import java.lang.IllegalStateException
-import java.nio.charset.Charset
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "Repository"
 
 class Repository private constructor(private val context: Context){
 
     fun getCuisineList(): CuisineList {
-        // WORKS:
-//        val inputStream = context.assets.open("cuisines.json")
-//        val size = inputStream.available()
-//        val buffer = ByteArray(size)
-//        inputStream.read(buffer)
-//        val jsonString = String(buffer, Charset.defaultCharset())
+        val jsonString = context.assets.open("cuisines.json").bufferedReader().use {
+            it.readText()
+        }
 
-        val jsonString = context.assets.open("cuisines.json").bufferedReader().use { it.readText() }
-
-//        open(fileName).bufferedReader().use{it.readText()}
-//        getActivity(context)?.assets?.open("yourfilename.json")
-//        assets.open("./cuisines.json").bufferedReader().use { it.readText() }
-//        val jsonString: String = File("./cuisines.json").readText(Charsets.UTF_8)
-//        val cuisineList = Gson().fromJson(jsonString, CuisineList::class.java)
         val moshi: Moshi = Moshi.Builder().build()
         val jsonAdapter: JsonAdapter<CuisineList> = moshi.adapter(CuisineList::class.java)
+
         val cuisineList = jsonAdapter.fromJson(jsonString)
-        cuisineList?.categories?.forEach { Log.d(TAG, it.toString()) }
         return cuisineList!!
     }
+
+    fun getRestaurants(
+        distance: String,
+        priceRange: String,
+        categories: String
+    ) {
+        Log.d(TAG, "distance: $distance")
+        Log.d(TAG, "price range: $priceRange")
+        Log.d(TAG, "cuisines: $categories")
+
+        val service = Retrofit.Builder()
+            .baseUrl("https://api.yelp.com/v3/")
+            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
+            .build()
+            .create(ApiService::class.java)
+
+        var response: RestaurantSearchResponse
+
+        CoroutineScope(Dispatchers.IO).launch {
+            response = service.search(
+                token = "Bearer FxhnaEnu31yrqfGl1XcyyH_mjgR7NuII6gJLvV2zj_fxVFlmsbY4od73X52AwXMBATyJtrHkp3C6cWuMMTLt6VEdbkc2E4ea9vS5AkcSFe5d7ELg7L8ipTunEDfXYXYx",
+                mapOf(
+                    "location" to "515 S Mangum St, Durham, NC 27701",
+                    "radius" to distance,
+                    "price" to priceRange,
+                    "categories" to categories
+                )
+            )
+            Log.d(TAG, "response total: ${response.total}")
+            Log.d(TAG, "num businesses: ${response.businesses.size}")
+        }
+
+    }
+
 
     companion object {
         private var INSTANCE: Repository? = null
