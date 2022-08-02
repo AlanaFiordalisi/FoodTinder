@@ -31,10 +31,6 @@ class FilterFragment : Fragment() {
         setUpSearchButton()
         setUpCuisineTextView(view)
 
-        viewModel.logText.observe(viewLifecycleOwner) {
-            binding.logText.text = it
-        }
-
         return view
     }
 
@@ -48,9 +44,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun setUpCuisineTextView(view: View) {
-        // TODO move this to viewmodel?
         val cuisinesArray: Array<String> = viewModel.cuisines.map { cuisine -> cuisine.title }.toTypedArray()
-//        val cuisineList: Array<String> = activity?.resources?.getStringArray(R.array.cuisine_list) as Array<String>
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             view.context,
             android.R.layout.simple_dropdown_item_1line,

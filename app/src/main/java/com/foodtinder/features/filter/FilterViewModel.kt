@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.foodtinder.model.Cuisine
 import com.foodtinder.network.Repository
 
-private const val TAG = "FilterViewModel"
 private const val METERS_PER_MILE = 1609.34
 
 class FilterViewModel : ViewModel() {
@@ -23,9 +22,6 @@ class FilterViewModel : ViewModel() {
     private val _cuisineAliases: MutableLiveData<MutableList<String>> =
         MutableLiveData(mutableListOf())
 
-    val logText: LiveData<String> get() = _logText
-    private val _logText = MutableLiveData<String>()
-
     fun setPriceRange(input: Float) {
         var priceRange = ""
         for (idx in 1..input.toInt()) {
@@ -40,13 +36,15 @@ class FilterViewModel : ViewModel() {
 
     fun addCuisine(cuisine: String) = _cuisineAliases.value?.add(cuisine)
     fun removeCuisine(cuisine: String) = _cuisineAliases.value?.remove(cuisine)
+    private fun getCuisineAliasesString() = cuisineAliases.value.toString()
+        .filterNot { it.isWhitespace() }
+        .trim('[', ']')
 
     fun onClickSearch() {
-        val cuisineAliasesString = cuisineAliases.value.toString().trim('[', ']')
         repository.getRestaurants(
             distance.value.orEmpty(),
             priceRange.value.orEmpty(),
-            cuisineAliasesString
+            getCuisineAliasesString()
         )
     }
 }
