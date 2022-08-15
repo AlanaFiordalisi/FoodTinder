@@ -15,7 +15,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "Repository"
 
-class Repository private constructor(private val context: Context){
+class Repository private constructor(private val context: Context) {
 
     fun getCuisineList(): CuisineList {
         val jsonString = context.assets.open("cuisines.json").bufferedReader().use {
@@ -29,37 +29,28 @@ class Repository private constructor(private val context: Context){
         return cuisineList!!
     }
 
-    fun getRestaurants(
+    suspend fun getRestaurants(
         distance: String,
         priceRange: String,
         categories: String
-    ) {
+    ) : RestaurantSearchResponse {
         Log.d(TAG, "distance: $distance")
         Log.d(TAG, "price range: $priceRange")
         Log.d(TAG, "cuisines: $categories")
 
-        val service = Retrofit.Builder()
-            .baseUrl("https://api.yelp.com/v3/")
-            .addConverterFactory(GsonConverterFactory.create(GsonBuilder().create()))
-            .build()
-            .create(ApiService::class.java)
-
-        var response: RestaurantSearchResponse
-
-        CoroutineScope(Dispatchers.IO).launch {
-            response = service.search(
-                token = "Bearer FxhnaEnu31yrqfGl1XcyyH_mjgR7NuII6gJLvV2zj_fxVFlmsbY4od73X52AwXMBATyJtrHkp3C6cWuMMTLt6VEdbkc2E4ea9vS5AkcSFe5d7ELg7L8ipTunEDfXYXYx",
-                mapOf(
-                    "location" to "515 S Mangum St, Durham, NC 27701",
-                    "radius" to distance,
-                    "price" to priceRange,
-                    "categories" to categories
-                )
+        val response: RestaurantSearchResponse = YelpApi.retrofitService.search(
+            mapOf(
+                "location" to "515 S Mangum St, Durham, NC 27701",
+                "radius" to distance,
+                "price" to priceRange,
+                "categories" to categories
             )
-            Log.d(TAG, "response total: ${response.total}")
-            Log.d(TAG, "num businesses: ${response.businesses.size}")
-        }
+        )
 
+        Log.d(TAG, "response total: ${response.total}")
+        Log.d(TAG, "num businesses: ${response.businesses.size}")
+
+        return response
     }
 
 

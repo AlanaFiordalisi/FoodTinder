@@ -3,8 +3,10 @@ package com.foodtinder.features.filter
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.foodtinder.model.Cuisine
 import com.foodtinder.network.Repository
+import kotlinx.coroutines.launch
 
 private const val METERS_PER_MILE = 1609.34
 
@@ -41,10 +43,12 @@ class FilterViewModel : ViewModel() {
         .trim('[', ']')
 
     fun onClickSearch() {
-        repository.getRestaurants(
-            distance.value.orEmpty(),
-            priceRange.value.orEmpty(),
-            getCuisineAliasesString()
-        )
+        viewModelScope.launch {
+            val response = repository.getRestaurants(
+                distance.value.orEmpty(),
+                priceRange.value.orEmpty(),
+                getCuisineAliasesString()
+            )
+        }
     }
 }
