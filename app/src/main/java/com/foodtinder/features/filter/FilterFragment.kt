@@ -36,8 +36,9 @@ class FilterFragment : Fragment() {
 
     private fun setUpSearchButton() {
         binding.button.setOnClickListener {
-            viewModel.setDistance(binding.filterDistanceSlider.value)
             viewModel.setPriceRange(binding.filterPriceRatingBar.rating)
+            viewModel.setDistance(binding.filterDistanceSlider.value)
+            viewModel.setLocation(binding.filterLocationEdittext.text.toString())
 
             viewModel.onClickSearch()
         }

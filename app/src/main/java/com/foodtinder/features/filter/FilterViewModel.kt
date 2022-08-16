@@ -17,6 +17,9 @@ class FilterViewModel : ViewModel() {
     val priceRange: LiveData<String> get() = _priceRange
     private val _priceRange = MutableLiveData("")
 
+    val location: LiveData<String> get() = _location
+    private val _location = MutableLiveData("")
+
     val distance: LiveData<String> get() = _distance
     private val _distance = MutableLiveData("")
 
@@ -32,6 +35,10 @@ class FilterViewModel : ViewModel() {
         _priceRange.value = priceRange.trim(',')
     }
 
+    fun setLocation(input: String) {
+        _location.value = input
+    }
+
     fun setDistance(input: Float) {
         _distance.value = (input * METERS_PER_MILE).toInt().toString()
     }
@@ -45,8 +52,9 @@ class FilterViewModel : ViewModel() {
     fun onClickSearch() {
         viewModelScope.launch {
             val response = repository.getRestaurants(
-                distance.value.orEmpty(),
                 priceRange.value.orEmpty(),
+                location.value.orEmpty(),
+                distance.value.orEmpty(),
                 getCuisineAliasesString()
             )
         }

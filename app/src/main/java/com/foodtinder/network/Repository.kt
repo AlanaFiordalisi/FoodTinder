@@ -30,19 +30,21 @@ class Repository private constructor(private val context: Context) {
     }
 
     suspend fun getRestaurants(
-        distance: String,
         priceRange: String,
+        location: String,
+        distance: String,
         categories: String
     ) : RestaurantSearchResponse {
-        Log.d(TAG, "distance: $distance")
         Log.d(TAG, "price range: $priceRange")
+        Log.d(TAG, "location: $location")
+        Log.d(TAG, "distance: $distance")
         Log.d(TAG, "cuisines: $categories")
 
         val response: RestaurantSearchResponse = YelpApi.retrofitService.search(
             mapOf(
-                "location" to "515 S Mangum St, Durham, NC 27701",
-                "radius" to distance,
                 "price" to priceRange,
+                "location" to location,
+                "radius" to distance,
                 "categories" to categories
             )
         )

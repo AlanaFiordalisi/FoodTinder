@@ -23,8 +23,38 @@
         android:numStars="4"
         android:rating="1"
         android:stepSize="1"
-        app:layout_constraintStart_toStartOf="@+id/filter_price_label"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/filter_price_label" />
+
+    <TextView
+        android:id="@+id/filter_location_label"
+        style="@style/SmallHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/filter_location_title"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/filter_price_rating_bar" />
+
+    <EditText
+        android:id="@+id/filter_location_edittext"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintTop_toBottomOf="@id/filter_location_label"
+        app:layout_constraintEnd_toStartOf="@id/filter_location_button"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageButton
+        android:id="@+id/filter_location_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/my_location_24"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintTop_toBottomOf="@id/filter_location_label"/>
 
     <TextView
         android:id="@+id/filter_distance_label"
@@ -32,19 +62,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/filter_distance_title"
-        app:layout_constraintBottom_toTopOf="@+id/filter_distance_slider"
-        app:layout_constraintStart_toStartOf="@+id/filter_distance_slider" />
+        app:layout_constraintTop_toBottomOf="@id/filter_location_edittext"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <com.google.android.material.slider.Slider
         android:id="@+id/filter_distance_slider"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:stepSize="1"
         android:valueFrom="1"
         android:valueTo="24"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filter_price_rating_bar"
+        app:layout_constraintTop_toBottomOf="@id/filter_distance_label"
         app:thumbRadius="8dp"
         app:trackHeight="4dp" />
 

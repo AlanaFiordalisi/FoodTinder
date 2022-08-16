@@ -9,6 +9,7 @@
 
     <!-- Filter fragment -->
     <string name="filter_price_range_title">Price Range</string>
+    <string name="filter_location_title">Location</string>
     <string name="filter_distance_title">Max Distance (miles)</string>
     <string name="filter_categories_title">Categories</string>
     <string name="filter_categories_hint">Enter restaurant categories and cuisines…</string>
