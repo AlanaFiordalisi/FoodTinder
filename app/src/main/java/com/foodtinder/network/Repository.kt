@@ -4,14 +4,8 @@ import android.content.Context
 import android.util.Log
 import com.foodtinder.model.CuisineList
 import com.foodtinder.network.model.RestaurantSearchResponse
-import com.google.gson.GsonBuilder
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 private const val TAG = "Repository"
 
@@ -31,14 +25,18 @@ class Repository private constructor(private val context: Context) {
 
     suspend fun getRestaurants(
         priceRange: String,
-        location: String,
         distance: String,
-        categories: String
+        categories: String,
+        location: String = "",
+        latitude: Double = 0.0,
+        longitude: Double = 0.0
     ) : RestaurantSearchResponse {
         Log.d(TAG, "price range: $priceRange")
         Log.d(TAG, "location: $location")
         Log.d(TAG, "distance: $distance")
         Log.d(TAG, "cuisines: $categories")
+        Log.d(TAG, "lat: $latitude")
+        Log.d(TAG, "long: $longitude")
 
         val response: RestaurantSearchResponse = YelpApi.retrofitService.search(
             mapOf(
@@ -57,6 +55,8 @@ class Repository private constructor(private val context: Context) {
 
 
     companion object {
+        // TODO: fix memory leak o.o
+
         private var INSTANCE: Repository? = null
 
         fun initialize(context: Context) {

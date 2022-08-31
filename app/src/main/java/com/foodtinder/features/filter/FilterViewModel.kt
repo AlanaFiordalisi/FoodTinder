@@ -1,17 +1,22 @@
 package com.foodtinder.features.filter
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.foodtinder.helpers.LocationHelper
 import com.foodtinder.model.Cuisine
 import com.foodtinder.network.Repository
 import kotlinx.coroutines.launch
 
+private const val TAG = "FilterViewModel"
 private const val METERS_PER_MILE = 1609.34
 
 class FilterViewModel : ViewModel() {
     private val repository: Repository = Repository.get()
+    private val locationHelper: LocationHelper = LocationHelper.get()
+
     val cuisines: List<Cuisine> = repository.getCuisineList().categories
 
     val priceRange: LiveData<String> get() = _priceRange
@@ -19,6 +24,9 @@ class FilterViewModel : ViewModel() {
 
     val location: LiveData<String> get() = _location
     private val _location = MutableLiveData("")
+
+    private val _latitude = MutableLiveData(0.0)
+    private val _longitude = MutableLiveData(0.0)
 
     val distance: LiveData<String> get() = _distance
     private val _distance = MutableLiveData("")
@@ -39,6 +47,15 @@ class FilterViewModel : ViewModel() {
         _location.value = input
     }
 
+    fun setCurrentLocation() {
+        locationHelper.getCurrentLocation().addOnSuccessListener { location ->
+            Log.d(TAG, "${location?.latitude}")
+            Log.d(TAG, "${location?.longitude}")
+            _latitude.value = location?.latitude
+            _longitude.value = location?.longitude
+        }
+    }
+
     fun setDistance(input: Float) {
         _distance.value = (input * METERS_PER_MILE).toInt().toString()
     }
@@ -55,7 +72,9 @@ class FilterViewModel : ViewModel() {
                 priceRange.value.orEmpty(),
                 location.value.orEmpty(),
                 distance.value.orEmpty(),
-                getCuisineAliasesString()
+                getCuisineAliasesString(),
+                _latitude.value ?: 0.0,
+                _longitude.value ?: 0.0
             )
         }
     }
