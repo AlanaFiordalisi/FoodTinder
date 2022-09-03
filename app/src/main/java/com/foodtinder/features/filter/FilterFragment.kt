@@ -58,6 +58,7 @@ class FilterFragment : Fragment() {
     private fun setUpCurrentLocationToggle() {
         binding.filterCurrentLocationToggle.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) handlePermission()
+            viewModel.setUsingCurrentLocation(isChecked)
             binding.filterLocationEdittext.isVisible = !isChecked
         }
     }
@@ -79,7 +80,10 @@ class FilterFragment : Fragment() {
         binding.button.setOnClickListener {
             viewModel.setPriceRange(binding.filterPriceRatingBar.rating)
             viewModel.setDistance(binding.filterDistanceSlider.value)
-            viewModel.setLocation(binding.filterLocationEdittext.text.toString())
+
+            if (!viewModel.usingCurrentLocation) {
+                viewModel.setLocation(binding.filterLocationEdittext.text.toString())
+            }
 
             viewModel.onClickSearch()
         }

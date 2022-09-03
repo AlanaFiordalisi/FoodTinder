@@ -25,8 +25,11 @@ class FilterViewModel : ViewModel() {
     val location: LiveData<String> get() = _location
     private val _location = MutableLiveData("")
 
-    private val _latitude = MutableLiveData(0.0)
-    private val _longitude = MutableLiveData(0.0)
+    val usingCurrentLocation: Boolean get() = _usingCurrentLocation
+    private var _usingCurrentLocation = false
+
+    private var latitude: Double? = null
+    private var longitude: Double? = null
 
     val distance: LiveData<String> get() = _distance
     private val _distance = MutableLiveData("")
@@ -47,12 +50,15 @@ class FilterViewModel : ViewModel() {
         _location.value = input
     }
 
+    fun setUsingCurrentLocation(using: Boolean) {
+        _usingCurrentLocation = using
+    }
+
     fun setCurrentLocation() {
         locationHelper.getCurrentLocation().addOnSuccessListener { location ->
-            Log.d(TAG, "${location?.latitude}")
-            Log.d(TAG, "${location?.longitude}")
-            _latitude.value = location?.latitude
-            _longitude.value = location?.longitude
+            Log.d(TAG, "${location?.latitude}, ${location?.longitude}")
+            latitude = location?.latitude
+            longitude = location?.longitude
         }
     }
 
@@ -67,15 +73,30 @@ class FilterViewModel : ViewModel() {
         .trim('[', ']')
 
     fun onClickSearch() {
-        viewModelScope.launch {
-            val response = repository.getRestaurants(
-                priceRange.value.orEmpty(),
-                location.value.orEmpty(),
-                distance.value.orEmpty(),
-                getCuisineAliasesString(),
-                _latitude.value ?: 0.0,
-                _longitude.value ?: 0.0
-            )
+        if (usingCurrentLocation) {
+            val lat = latitude
+            val long = longitude
+
+            if (lat != null && long != null) {
+                viewModelScope.launch {
+                    val response = repository.getRestaurantsByCoordinates(
+                        priceRange.value.orEmpty(),
+                        distance.value.orEmpty(),
+                        getCuisineAliasesString(),
+                        lat,
+                        long
+                    )
+                }
+            }
+        } else {
+            viewModelScope.launch {
+                val response = repository.getRestaurantsByAddress(
+                    priceRange.value.orEmpty(),
+                    distance.value.orEmpty(),
+                    getCuisineAliasesString(),
+                    location.value.orEmpty()
+                )
+            }
         }
     }
 }

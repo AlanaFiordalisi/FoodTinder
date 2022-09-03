@@ -23,20 +23,14 @@ class Repository private constructor(private val context: Context) {
         return cuisineList!!
     }
 
-    suspend fun getRestaurants(
+    suspend fun getRestaurantsByAddress(
         priceRange: String,
         distance: String,
         categories: String,
-        location: String = "",
-        latitude: Double = 0.0,
-        longitude: Double = 0.0
+        location: String = ""
     ) : RestaurantSearchResponse {
-        Log.d(TAG, "price range: $priceRange")
-        Log.d(TAG, "location: $location")
-        Log.d(TAG, "distance: $distance")
-        Log.d(TAG, "cuisines: $categories")
-        Log.d(TAG, "lat: $latitude")
-        Log.d(TAG, "long: $longitude")
+        Log.d(TAG, "getRestaurantsByAddress")
+        Log.d(TAG, "$priceRange, $distance, ~$categories~, $location")
 
         val response: RestaurantSearchResponse = YelpApi.retrofitService.search(
             mapOf(
@@ -53,6 +47,31 @@ class Repository private constructor(private val context: Context) {
         return response
     }
 
+    suspend fun getRestaurantsByCoordinates(
+        priceRange: String,
+        distance: String,
+        categories: String,
+        latitude: Double,
+        longitude: Double
+    ) : RestaurantSearchResponse {
+        Log.d(TAG, "getRestaurantsByCoordinates")
+        Log.d(TAG, "$priceRange, $distance, ~$categories~, ($latitude, $longitude)")
+
+        val response: RestaurantSearchResponse = YelpApi.retrofitService.search(
+            mapOf(
+                "price" to priceRange,
+                "radius" to distance,
+                "categories" to categories,
+                "latitude" to latitude.toString(),
+                "longitude" to longitude.toString()
+            )
+        )
+
+        Log.d(TAG, "response total: ${response.total}")
+        Log.d(TAG, "num businesses: ${response.businesses.size}")
+
+        return response
+    }
 
     companion object {
         // TODO: fix memory leak o.o
