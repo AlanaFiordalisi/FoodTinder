@@ -25,8 +25,8 @@ class FilterViewModel : ViewModel() {
     val location: LiveData<String> get() = _location
     private val _location = MutableLiveData("")
 
-    val usingCurrentLocation: Boolean get() = _usingCurrentLocation
-    private var _usingCurrentLocation = false
+    val usingCurrentLocation: LiveData<Boolean> get() = _usingCurrentLocation
+    private var _usingCurrentLocation = MutableLiveData(false)
 
     private var latitude: Double? = null
     private var longitude: Double? = null
@@ -51,7 +51,7 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setUsingCurrentLocation(using: Boolean) {
-        _usingCurrentLocation = using
+        _usingCurrentLocation.value = using
     }
 
     fun setCurrentLocation() {
@@ -73,7 +73,7 @@ class FilterViewModel : ViewModel() {
         .trim('[', ']')
 
     fun onClickSearch() {
-        if (usingCurrentLocation) {
+        if (usingCurrentLocation.value == true) {
             val lat = latitude
             val long = longitude
 

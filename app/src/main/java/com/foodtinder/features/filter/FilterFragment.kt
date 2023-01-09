@@ -18,6 +18,7 @@ import androidx.fragment.app.viewModels
 import com.foodtinder.R
 import com.foodtinder.databinding.FragmentFilterBinding
 import com.google.android.material.chip.Chip
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class FilterFragment : Fragment() {
     // TODO: Why would I want to have fragment extend a BaseFragment?
@@ -34,8 +35,8 @@ class FilterFragment : Fragment() {
             if (isGranted) {
                 viewModel.setCurrentLocation()
             } else {
-                // dialog to explain that they cannot use current location, but they must
-                // enter an address instead
+                showLocationDeniedDialog()
+                viewModel.setUsingCurrentLocation(false)
             }
         }
     }
@@ -47,6 +48,11 @@ class FilterFragment : Fragment() {
     ): View {
         binding = FragmentFilterBinding.inflate(layoutInflater, container, false)
         val view = binding.root
+
+        // update toggle state based on usingCurrentState
+        viewModel.usingCurrentLocation.observe(viewLifecycleOwner) { usingCurrentLocation ->
+            binding.filterCurrentLocationToggle.isChecked = usingCurrentLocation
+        }
 
         setUpCurrentLocationToggle()
         setUpCuisineTextView(view)
@@ -70,7 +76,7 @@ class FilterFragment : Fragment() {
                 Manifest.permission.ACCESS_FINE_LOCATION
             ) == PackageManager.PERMISSION_GRANTED -> viewModel.setCurrentLocation()
             shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
-                // show rationale dialog
+                showLocationRationaleDialog()
             }
             else -> requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
@@ -81,7 +87,7 @@ class FilterFragment : Fragment() {
             viewModel.setPriceRange(binding.filterPriceRatingBar.rating)
             viewModel.setDistance(binding.filterDistanceSlider.value)
 
-            if (!viewModel.usingCurrentLocation) {
+            if (viewModel.usingCurrentLocation.value != true) {
                 viewModel.setLocation(binding.filterLocationEdittext.text.toString())
             }
 
@@ -128,5 +134,34 @@ class FilterFragment : Fragment() {
 
         chipGroup.addView(chip)
         viewModel.addCuisine(cuisineAlias)
+    }
+
+    private fun showLocationRationaleDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(R.string.location_permission_title)
+            .setMessage(R.string.location_permission_message)
+            .setCancelable(false)
+            .setNegativeButton(R.string.location_permission_negative) { dialog, _ ->
+                dialog.dismiss()
+                viewModel.setUsingCurrentLocation(false)
+            }
+            .setPositiveButton(R.string.location_permission_positive) { dialog, _ ->
+                dialog.dismiss()
+                requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
+            }
+            .create()
+            .show()
+    }
+
+    private fun showLocationDeniedDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.location_permission_denied_title))
+            .setMessage(getString(R.string.location_permission_denied_message))
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

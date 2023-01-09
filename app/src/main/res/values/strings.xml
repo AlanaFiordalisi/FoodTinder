@@ -7,6 +7,9 @@
     <string name="session_name">%1$s Session</string>
     <string name="search">Search!</string>
 
+    <!-- Misc -->
+    <string name="ok">OK</string>
+
     <!-- Filter fragment -->
     <string name="filter_price_range_title">Price Range</string>
     <string name="filter_current_location_hint">Use current location</string>
@@ -15,4 +18,10 @@
     <string name="filter_distance_title">Max Distance (miles)</string>
     <string name="filter_categories_title">Categories</string>
     <string name="filter_categories_hint">Enter restaurant categories and cuisines…</string>
+    <string name="location_permission_title">Use location service?</string>
+    <string name="location_permission_message">Allow FoodTinder to access this device\'s location in order to search for restaurants based on your current location.</string>
+    <string name="location_permission_negative">No, thanks</string>
+    <string name="location_permission_positive">Grant Permission</string>
+    <string name="location_permission_denied_title">Location access denied</string>
+    <string name="location_permission_denied_message">By denying location access, you must now enter an address to center your restaurant search around.</string>
 </resources>
