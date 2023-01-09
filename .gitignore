@@ -7,6 +7,10 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+/.idea/misc.xml
+/.idea/gradle.xml
+/.idea/kotlinc.xml
+/.idea/render.experimental.xml
 .DS_Store
 /build
 /captures
