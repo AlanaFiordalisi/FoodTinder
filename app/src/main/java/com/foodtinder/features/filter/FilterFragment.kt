@@ -15,6 +15,8 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.foodtinder.R
 import com.foodtinder.databinding.FragmentFilterBinding
 import com.google.android.material.chip.Chip
@@ -25,6 +27,7 @@ class FilterFragment : Fragment() {
 
     private lateinit var binding: FragmentFilterBinding
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private val args: FilterFragmentArgs by navArgs()
 
     private val viewModel: FilterViewModel by viewModels()
 
@@ -54,11 +57,21 @@ class FilterFragment : Fragment() {
             binding.filterCurrentLocationToggle.isChecked = usingCurrentLocation
         }
 
+        setUpLocationEditText()
         setUpCurrentLocationToggle()
         setUpCuisineTextView(view)
         setUpSearchButton()
 
         return view
+    }
+
+    private fun setUpLocationEditText() {
+        if (args.address != null) binding.filterLocationEdittext.setText(args.address)
+        binding.filterLocationEdittext.setOnClickListener {
+            findNavController().navigate(
+                FilterFragmentDirections.actionFilterFragmentToAddressSearch()
+            )
+        }
     }
 
     private fun setUpCurrentLocationToggle() {

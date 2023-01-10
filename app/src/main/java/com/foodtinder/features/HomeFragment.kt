@@ -16,13 +16,15 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(layoutInflater)
         val view = binding.root
 
         binding.filterButton.setOnClickListener {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToFilterFragment()
+                HomeFragmentDirections.actionHomeFragmentToFilterFragment(
+                    address = null
+                )
             )
         }
 

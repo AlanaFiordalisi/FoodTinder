@@ -60,6 +60,8 @@
         android:hint="@string/filter_location_hint"
         android:layout_marginEnd="8dp"
         android:inputType="text"
+        android:focusable="false"
+        android:importantForAutofill="no"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/filter_current_location_toggle" />
