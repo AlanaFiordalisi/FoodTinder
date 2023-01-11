@@ -14,10 +14,10 @@
     <string name="filter_price_range_title">Price Range</string>
     <string name="filter_current_location_hint">Use current location</string>
     <string name="filter_location_title">Location</string>
-    <string name="filter_location_hint">Enter address</string>
+    <string name="filter_location_hint">Enter address…</string>
     <string name="filter_distance_title">Max Distance (miles)</string>
     <string name="filter_categories_title">Categories</string>
-    <string name="filter_categories_hint">Enter restaurant categories and cuisines…</string>
+    <string name="filter_categories_hint">Enter cuisines and restaurant types…</string>
     <string name="location_permission_title">Use location service?</string>
     <string name="location_permission_message">Allow FoodTinder to access this device\'s location in order to search for restaurants based on your current location.</string>
     <string name="location_permission_negative">No, thanks</string>
