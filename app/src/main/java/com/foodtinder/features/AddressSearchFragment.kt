@@ -1,5 +1,6 @@
 package com.foodtinder.features
 
+import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -44,6 +46,15 @@ class AddressSearchFragment : Fragment() {
         setUpSearchEngineUiAdapter()
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Focus on the EditText and show the soft keyboard
+        binding.queryText.requestFocus()
+        val inputManager = activity?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputManager.showSoftInput(binding.queryText, InputMethodManager.SHOW_IMPLICIT)
     }
 
     private fun setUpAddressEditText() {
