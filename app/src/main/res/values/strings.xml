@@ -5,7 +5,7 @@
     <string name="vs">vs</string>
     <string name="match_up_progress">Match-up %1$d of %2$d</string>
     <string name="session_name">%1$s Session</string>
-    <string name="search">Search!</string>
+    <string name="search">Search</string>
 
     <!-- Misc -->
     <string name="ok">OK</string>
