@@ -52,9 +52,24 @@ class FilterFragment : Fragment() {
         binding = FragmentFilterBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
-        // update toggle state based on usingCurrentState
+        // update toggle state based on usingCurrentState and reset coordinates when toggled off
         viewModel.usingCurrentLocation.observe(viewLifecycleOwner) { usingCurrentLocation ->
             binding.filterCurrentLocationToggle.isChecked = usingCurrentLocation
+            if (!usingCurrentLocation) viewModel.resetCurrentLocation()
+        }
+
+        // show loading spinner while the current location is being retrieved
+        viewModel.settingCurrentLocation.observe(viewLifecycleOwner) { settingCurrentLocation ->
+            when (settingCurrentLocation) {
+                true -> {
+                    binding.filterSearchButton.visibility = View.INVISIBLE
+                    binding.filterLoadingSpinner.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.filterSearchButton.visibility = View.VISIBLE
+                    binding.filterLoadingSpinner.visibility = View.INVISIBLE
+                }
+            }
         }
 
         setUpLocationEditText()
@@ -96,7 +111,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun setUpSearchButton() {
-        binding.button.setOnClickListener {
+        binding.filterSearchButton.setOnClickListener {
             viewModel.setPriceRange(binding.filterPriceRatingBar.rating)
             viewModel.setDistance(binding.filterDistanceSlider.value)
 
@@ -104,8 +119,24 @@ class FilterFragment : Fragment() {
                 viewModel.setLocation(binding.filterLocationEdittext.text.toString())
             }
 
-            viewModel.onClickSearch()
+            // ensure a location is set (address or coordinates) before conducting the search
+            when (viewModel.locationEntryValid()) {
+                true -> viewModel.onClickSearch()
+                else -> showLocationRequiredDialog()
+            }
         }
+    }
+
+    private fun showLocationRequiredDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle("Location must be set")
+            .setMessage("In order to search, you must either enter an address or use current location.")
+            .setCancelable(false)
+            .setPositiveButton(R.string.ok) { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     private fun setUpCuisineTextView(view: View) {

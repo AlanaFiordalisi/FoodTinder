@@ -28,6 +28,9 @@ class FilterViewModel : ViewModel() {
     val usingCurrentLocation: LiveData<Boolean> get() = _usingCurrentLocation
     private var _usingCurrentLocation = MutableLiveData(false)
 
+    val settingCurrentLocation: LiveData<Boolean> get() = _settingCurrentLocation
+    private var _settingCurrentLocation = MutableLiveData(false)
+
     private var latitude: Double? = null
     private var longitude: Double? = null
 
@@ -55,11 +58,18 @@ class FilterViewModel : ViewModel() {
     }
 
     fun setCurrentLocation() {
+        _settingCurrentLocation.value = true
         locationHelper.getCurrentLocation().addOnSuccessListener { location ->
             Log.d(TAG, "${location?.latitude}, ${location?.longitude}")
             latitude = location?.latitude
             longitude = location?.longitude
+            _settingCurrentLocation.value = false
         }
+    }
+
+    fun resetCurrentLocation() {
+        latitude = null
+        longitude = null
     }
 
     fun setDistance(input: Float) {
@@ -73,10 +83,17 @@ class FilterViewModel : ViewModel() {
         .trim('[', ']')
 
     fun onClickSearch() {
+        Log.d(TAG, "--------search!-------")
+        Log.d(TAG, "Price Range: ${priceRange.value}")
+        Log.d(TAG, "Using Current Location: ${usingCurrentLocation.value}")
+        Log.d(TAG, "Distance: ${distance.value}")
+        Log.d(TAG, "Cuisines: ${getCuisineAliasesString()}")
+
         if (usingCurrentLocation.value == true) {
             val lat = latitude
             val long = longitude
 
+            Log.d(TAG, "Lat/Long: $lat/$long")
             if (lat != null && long != null) {
                 viewModelScope.launch {
                     val response = repository.getRestaurantsByCoordinates(
@@ -89,6 +106,7 @@ class FilterViewModel : ViewModel() {
                 }
             }
         } else {
+            Log.d(TAG, "Address: ${location.value}")
             viewModelScope.launch {
                 val response = repository.getRestaurantsByAddress(
                     priceRange.value.orEmpty(),
@@ -99,4 +117,6 @@ class FilterViewModel : ViewModel() {
             }
         }
     }
+
+    fun locationEntryValid() = !location.value.isNullOrEmpty() || (latitude != null && longitude != null)
 }

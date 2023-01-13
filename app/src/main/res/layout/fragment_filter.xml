@@ -123,9 +123,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/filter_category_chips" />
 
-
         <Button
-            android:id="@+id/button"
+            android:id="@+id/filter_search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/background_transparent"
@@ -140,6 +139,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filter_category_input"
             app:layout_constraintVertical_bias="1.0" />
+
+        <ProgressBar
+            android:id="@+id/filter_loading_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintStart_toStartOf="@id/filter_search_button"
+            app:layout_constraintEnd_toEndOf="@id/filter_search_button"
+            app:layout_constraintTop_toTopOf="@id/filter_search_button"
+            app:layout_constraintBottom_toBottomOf="@id/filter_search_button" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
