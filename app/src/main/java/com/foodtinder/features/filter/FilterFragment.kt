@@ -140,7 +140,7 @@ class FilterFragment : Fragment() {
     }
 
     private fun setUpCuisineTextView(view: View) {
-        val cuisinesArray: Array<String> = viewModel.cuisines.map { cuisine -> cuisine.title }.toTypedArray()
+        val cuisinesArray: Array<String> = viewModel.cuisineOptions.map { cuisine -> cuisine.title }.toTypedArray()
         val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
             view.context,
             android.R.layout.simple_dropdown_item_1line,
@@ -150,20 +150,22 @@ class FilterFragment : Fragment() {
         val textView: AutoCompleteTextView = binding.filterCategoryInput
         textView.setAdapter(adapter)
         textView.onItemClickListener = OnItemClickListener { adapterView, _, i, _ ->
-            // Add chip to group below input field
-            val selectedCuisine: String = adapterView.getItemAtPosition(i) as String
-            addChipToChipGroup(selectedCuisine)
+            // If this cuisine has not yet been added to the list of selected cuisines, add and display it
+            val selectedCuisine = adapterView.getItemAtPosition(i) as String
+            val cuisineAlias = viewModel.cuisineOptions.first { it.title == selectedCuisine }.alias
+
+            viewModel.cuisines.value?.let { cuisines ->
+                if (!cuisines.contains(cuisineAlias)) {
+                    addChipToChipGroup(selectedCuisine, cuisineAlias)
+                }
+            }
 
             // Clear text from input field
             textView.setText("")
         }
     }
 
-    private fun addChipToChipGroup(cuisine: String) {
-        val cuisineAlias = viewModel.cuisines.first {
-            it.title == cuisine
-        }.alias
-
+    private fun addChipToChipGroup(cuisine: String, cuisineAlias: String) {
         val chipGroup = binding.filterCategoryChips
         val chip = layoutInflater.inflate(
             R.layout.single_chip,

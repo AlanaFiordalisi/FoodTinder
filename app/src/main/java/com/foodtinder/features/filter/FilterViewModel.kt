@@ -17,7 +17,7 @@ class FilterViewModel : ViewModel() {
     private val repository: Repository = Repository.get()
     private val locationHelper: LocationHelper = LocationHelper.get()
 
-    val cuisines: List<Cuisine> = repository.getCuisineList().categories
+    val cuisineOptions: List<Cuisine> = repository.getCuisineList().categories
 
     val priceRange: LiveData<String> get() = _priceRange
     private val _priceRange = MutableLiveData("")
@@ -37,9 +37,9 @@ class FilterViewModel : ViewModel() {
     val distance: LiveData<String> get() = _distance
     private val _distance = MutableLiveData("")
 
-    val cuisineAliases: LiveData<MutableList<String>> get() = _cuisineAliases
-    private val _cuisineAliases: MutableLiveData<MutableList<String>> =
-        MutableLiveData(mutableListOf())
+    val cuisines: LiveData<MutableSet<String>> get() = _cuisines
+    private val _cuisines: MutableLiveData<MutableSet<String>> =
+        MutableLiveData(mutableSetOf())
 
     fun setPriceRange(input: Float) {
         var priceRange = ""
@@ -76,9 +76,9 @@ class FilterViewModel : ViewModel() {
         _distance.value = (input * METERS_PER_MILE).toInt().toString()
     }
 
-    fun addCuisine(cuisine: String) = _cuisineAliases.value?.add(cuisine)
-    fun removeCuisine(cuisine: String) = _cuisineAliases.value?.remove(cuisine)
-    private fun getCuisineAliasesString() = cuisineAliases.value.toString()
+    fun addCuisine(cuisine: String) = _cuisines.value?.add(cuisine)
+    fun removeCuisine(cuisine: String) = _cuisines.value?.remove(cuisine)
+    private fun getCuisineAliasesString() = cuisines.value.toString()
         .filterNot { it.isWhitespace() }
         .trim('[', ']')
 
