@@ -4,16 +4,17 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.foodtinder.R
 import com.foodtinder.databinding.FragmentAddressSearchBinding
+import com.foodtinder.features.filter.FilterViewModel
 import com.mapbox.search.autofill.AddressAutofill
 import com.mapbox.search.autofill.AddressAutofillSuggestion
 import com.mapbox.search.autofill.Query
@@ -23,6 +24,8 @@ import com.mapbox.search.ui.view.DistanceUnitType
 import com.mapbox.search.ui.view.SearchResultsView
 
 class AddressSearchFragment : Fragment() {
+
+    private val viewModel: FilterViewModel by activityViewModels()
 
     private lateinit var addressAutofill: AddressAutofill
     private lateinit var binding: FragmentAddressSearchBinding
@@ -58,6 +61,11 @@ class AddressSearchFragment : Fragment() {
     }
 
     private fun setUpAddressEditText() {
+        // Pre-fill address if one has already been selected
+        viewModel.location.value?.let { currentAddress ->
+            binding.queryText.setText(currentAddress)
+        }
+
         binding.queryText.addTextChangedListener(object : TextWatcher {
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -94,11 +102,9 @@ class AddressSearchFragment : Fragment() {
         searchEngineUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
-                Log.i("AddressSearch Fragment", suggestion.formattedAddress.formatAddress())
+                viewModel.setLocation(suggestion.formattedAddress.formatAddress())
                 findNavController().navigate(
-                    AddressSearchFragmentDirections.actionAddressSearchToFilterFragment(
-                        suggestion.formattedAddress.formatAddress()
-                    )
+                    AddressSearchFragmentDirections.actionAddressSearchToFilterFragment()
                 )
             }
 

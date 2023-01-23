@@ -14,9 +14,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.fragment.navArgs
 import com.foodtinder.R
 import com.foodtinder.databinding.FragmentFilterBinding
 import com.google.android.material.chip.Chip
@@ -25,11 +24,10 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 class FilterFragment : Fragment() {
     // TODO: Why would I want to have fragment extend a BaseFragment?
 
+    private val viewModel: FilterViewModel by activityViewModels()
+
     private lateinit var binding: FragmentFilterBinding
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private val args: FilterFragmentArgs by navArgs()
-
-    private val viewModel: FilterViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,7 +79,12 @@ class FilterFragment : Fragment() {
     }
 
     private fun setUpLocationEditText() {
-        if (args.address != null) binding.filterLocationEdittext.setText(args.address)
+        // Pre-fill address if one has already been entered
+        viewModel.location.value?.let {
+            binding.filterLocationEdittext.setText(it)
+        }
+
+        // Open AddressSearchFragment to handle address autocomplete logic when clicked
         binding.filterLocationEdittext.setOnClickListener {
             findNavController().navigate(
                 FilterFragmentDirections.actionFilterFragmentToAddressSearch()

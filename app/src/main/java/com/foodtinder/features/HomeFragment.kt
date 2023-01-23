@@ -22,9 +22,7 @@ class HomeFragment : Fragment() {
 
         binding.filterButton.setOnClickListener {
             findNavController().navigate(
-                HomeFragmentDirections.actionHomeFragmentToFilterFragment(
-                    address = null
-                )
+                HomeFragmentDirections.actionHomeFragmentToFilterFragment()
             )
         }
 
