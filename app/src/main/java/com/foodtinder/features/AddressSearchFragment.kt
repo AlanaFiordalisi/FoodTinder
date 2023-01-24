@@ -48,6 +48,10 @@ class AddressSearchFragment : Fragment() {
         setUpSearchResultsView()
         setUpSearchEngineUiAdapter()
 
+        binding.confirmButton.setOnClickListener {
+            setLocationAndNavigateBack(binding.queryText.text.toString())
+        }
+
         return binding.root
     }
 
@@ -74,6 +78,11 @@ class AddressSearchFragment : Fragment() {
 
             override fun onTextChanged(text: CharSequence?, start: Int, before: Int, count: Int) {
                 // TODO: ignoreNextQueryTextUpdate?
+
+                // Show no suggestions in SearchResultsView when the text box is empty
+                text?.isEmpty().let {
+                    binding.searchResultsView.setAdapterItems(emptyList())
+                }
 
                 val query = Query.create(text.toString())
                 if (query != null) {
@@ -102,10 +111,7 @@ class AddressSearchFragment : Fragment() {
         searchEngineUiAdapter.addSearchListener(object : AddressAutofillUiAdapter.SearchListener {
 
             override fun onSuggestionSelected(suggestion: AddressAutofillSuggestion) {
-                viewModel.setLocation(suggestion.formattedAddress.formatAddress())
-                findNavController().navigate(
-                    AddressSearchFragmentDirections.actionAddressSearchToFilterFragment()
-                )
+                setLocationAndNavigateBack(suggestion.formattedAddress.formatAddress())
             }
 
             override fun onSuggestionsShown(suggestions: List<AddressAutofillSuggestion>) {
@@ -122,5 +128,12 @@ class AddressSearchFragment : Fragment() {
         val start = this.indexOf(",")
         val end = start + 1
         return this.removeRange(start, end)
+    }
+
+    private fun setLocationAndNavigateBack(location: String) {
+        viewModel.setLocation(location)
+        findNavController().navigate(
+            AddressSearchFragmentDirections.actionAddressSearchToFilterFragment()
+        )
     }
 }

@@ -25,6 +25,10 @@
     <string name="location_permission_denied_title">Location access denied</string>
     <string name="location_permission_denied_message">By denying location access, you must now enter an address to center your restaurant search around.</string>
 
+    <!-- AddressSearchFragment -->
+    <string name="address_hint">Address</string>
+    <string name="confirm_address_cd">Confirm address</string>
+
     <!-- API keys -->
     <string name="mapbox_access_token">pk.eyJ1IjoiYWZpb3JkYWxpc2kiLCJhIjoiY2xjcGFmZHVyNXhndzNvbW92Nms3bG5kMSJ9.0c1ChCFAbl0bSGUecO1dUA</string>
 </resources>
