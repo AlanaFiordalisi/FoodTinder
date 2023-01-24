@@ -125,9 +125,9 @@ class AddressSearchFragment : Fragment() {
     }
 
     fun String.formatAddress(): String {
-        val start = this.indexOf(",")
-        val end = start + 1
-        return this.removeRange(start, end)
+        val addressComponents = this.split(", ")
+        return "${addressComponents[0]} ${addressComponents[1]}\n" +
+                "${addressComponents[3]}, ${addressComponents[4]} ${addressComponents[2]}"
     }
 
     private fun setLocationAndNavigateBack(location: String) {
