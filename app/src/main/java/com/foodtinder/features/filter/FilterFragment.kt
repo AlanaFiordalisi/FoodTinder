@@ -50,6 +50,8 @@ class FilterFragment : Fragment() {
         binding = FragmentFilterBinding.inflate(layoutInflater, container, false)
         val view = binding.root
 
+        binding.topAppBar.setNavigationOnClickListener { findNavController().popBackStack() }
+
         // update toggle state based on usingCurrentState and reset coordinates when toggled off
         viewModel.usingCurrentLocation.observe(viewLifecycleOwner) { usingCurrentLocation ->
             binding.filterCurrentLocationToggle.isChecked = usingCurrentLocation
