@@ -9,38 +9,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:inputType="textMultiLine"
         android:layout_margin="8dp"
         android:importantForAutofill="no"
         android:hint="@string/address_hint"
         app:boxBackgroundColor="@color/blue_transparent_200"
+        app:startIconDrawable="@drawable/ic_baseline_arrow_back"
         app:endIconDrawable="@drawable/ic_baseline_clear_24"
         app:endIconMode="clear_text"
         app:endIconContentDescription="Clear text"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/confirm_button" >
+        app:layout_constraintEnd_toEndOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/query_text"
+            android:inputType="text"
+            android:imeOptions="actionDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
     </com.google.android.material.textfield.TextInputLayout>
-
-    <ImageButton
-        android:id="@+id/confirm_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_baseline_check_24"
-        android:background="@drawable/background_transparent"
-        android:paddingEnd="8dp"
-        app:tint="@color/blue_500"
-        app:layout_constraintStart_toEndOf="@id/query_text_layout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/query_text_layout"
-        app:layout_constraintBottom_toBottomOf="@id/query_text_layout"
-        android:contentDescription="@string/confirm_address_cd" />
 
     <com.mapbox.search.ui.view.SearchResultsView
         android:id="@+id/search_results_view"

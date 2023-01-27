@@ -7,6 +7,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -48,8 +49,15 @@ class AddressSearchFragment : Fragment() {
         setUpSearchResultsView()
         setUpSearchEngineUiAdapter()
 
-        binding.confirmButton.setOnClickListener {
-            setLocationAndNavigateBack(binding.queryText.text.toString())
+        binding.queryTextLayout.setStartIconOnClickListener { findNavController().popBackStack() }
+
+        binding.queryText.setOnEditorActionListener { _, i, _ ->
+            if (i == EditorInfo.IME_ACTION_DONE) {
+                setLocationAndNavigateBack(binding.queryText.text.toString())
+                true
+            } else {
+                false
+            }
         }
 
         return binding.root
